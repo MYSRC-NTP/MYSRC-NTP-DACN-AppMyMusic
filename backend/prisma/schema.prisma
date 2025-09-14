@@ -1,0 +1,78 @@
+// backend/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  clerkId   String    @unique
+  fullName  String
+  imageUrl  String?
+  playlists Playlist[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Artist {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  imageUrl  String?
+  bio       String?
+  songs     Song[]
+  albums    Album[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Song {
+  id        String   @id @default(uuid())
+  title     String
+  artistId  String
+  artist    Artist   @relation(fields: [artistId], references: [id])
+  audioUrl  String
+  imageUrl  String
+  albumId   String?
+  album     Album?   @relation(fields: [albumId], references: [id])
+  playlists PlaylistSong[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Album {
+  id         String   @id @default(uuid())
+  title      String
+  artistId   String
+  artist     Artist   @relation(fields: [artistId], references: [id])
+  imageUrl   String
+  releaseYear Int
+  songs      Song[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+
+model Playlist {
+  id        String         @id @default(uuid())
+  name      String
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  songs     PlaylistSong[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model PlaylistSong {
+  id         String   @id @default(uuid())
+  playlistId String
+  songId     String
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  song       Song     @relation(fields: [songId], references: [id])
+
+  @@unique([playlistId, songId])
+}
