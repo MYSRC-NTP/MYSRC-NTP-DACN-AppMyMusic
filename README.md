@@ -263,3 +263,17 @@ npm run lint     # Chạy ESLint
 
 - Kiểm tra Clerk keys trong `.env`
 - Đảm bảo domain được cấu hình trong Clerk dashboard
+
+
+
+### 🔹 Ảnh 
+![Trang chủ ](./IMG/home.png)
+
+![Trang Playlist ](./IMG/dfplaylist.jpg)
+
+![Trang Playlist cá nhân ](./IMG/playlist.png)
+
+![Trang Nghệ Sĩ ](./IMG/NS1.jpg)
+![ +++ ](./IMG/NS2.jpg)
+
+![Trang Admin](./IMG/admin.jpg)
